@@ -1,6 +1,7 @@
-import friendSchema  from '../models/friendSchema.js';
-import seriesSchema from '../models/seriesSchema.js';
-
+// import friendSchema  from '../models/friendSchema.js';
+// import seriesSchema from '../models/seriesSchema.js';
+const friendSchema =require('../models/friendSchema');
+const seriesSchema = require('../models/seriesSchema');
 export const resolvers={
     Query:{
             getAllFriend:(root)=>{
@@ -57,5 +58,17 @@ export const resolvers={
                 })
             })
         },
+        async deleteFriend(root,{id}){
+            const wasDeleted =  await (friendSchema.deleteOne({_id:id}));
+            console.log("daasddsdf",wasDeleted)
+
+            return wasDeleted.deletedCount;
+
+            },
+        async editSeries(root,{ID,series:{seriesName,year,rating}}){
+            const wasEdited = await (seriesSchema.updateOne({_id:ID},{seriesName:seriesName,year:year,rating:rating}))
+            console.log("dsfsd",wasEdited)
+            return wasEdited.modifiedCount;
+        }
     },
 };

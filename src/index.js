@@ -2,7 +2,6 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { resolvers } from './graphql/resolvers';
 import { typeDefs } from './graphql/typeDefs';
-// import { PORT } from '../config/config';
 import mongoose from 'mongoose';
 
 const MONGODB = "mongodb+srv://bharti:bharti@cluster0.n5kkknd.mongodb.net/?retryWrites=true&w=majority";
