@@ -1,6 +1,7 @@
 const friendSchema =require('../models/friendSchema');
 const seriesSchema = require('../models/seriesSchema');
 const tripSchema = require('../models/tripSchema');
+const groupSchema = require('../models/groupSchema');
 export const resolvers={
     Query:{
             async getAllFriend(root){
@@ -43,9 +44,7 @@ export const resolvers={
                 year:series.year,
                 rating:series.rating
             });
-            
             newSeries.id=series._id;
-            
             return new Promise((resolve,reject)=>{
                 newSeries.save(err=>{
                     if(err) reject(err);
@@ -62,10 +61,18 @@ export const resolvers={
             noOfdays:input.noOfdays,
             noOfFriends:input.noOfFriends,
             });
-
             newTrip.id=newTrip._id;
             const createdTrip = await (newTrip.save());
             return createdTrip;
+        },
+        async createGroup(root,{ input }){
+            const newGroup=new groupSchema({
+            name:input.name,
+            friend:input.Friend,
+            });
+            newGroup.id=newGroup._id;
+            const createdGroup = await (newGroup.save());
+            return createdGroup;
         },
         async deleteFriend(root,{id}){
             const wasDeleted =  await (friendSchema.deleteOne({_id:id}));
