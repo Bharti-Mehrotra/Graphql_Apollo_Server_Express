@@ -1,8 +1,8 @@
-import express from 'express';
-import { ApolloServer } from 'apollo-server-express';
-import { resolvers } from './graphql/resolvers';
-import { typeDefs } from './graphql/typeDefs';
-import mongoose from 'mongoose';
+const express = require('express');
+const {ApolloServer} = require('apollo-server-express');
+const {resolvers} = require('./graphql/resolvers');
+const {typeDefs} = require('./graphql/typeDefs');
+const mongoose = require('mongoose');
 
 const MONGODB = "mongodb+srv://bharti:bharti@cluster0.n5kkknd.mongodb.net/?retryWrites=true&w=majority";
 const PORT = 3000;
@@ -12,9 +12,6 @@ mongoose.connect(MONGODB)
 .then(()=>{
     console.log("MongoDB Connection Successful");
 })
-.then((res)=>{
-    console.log("server running at ",res);
-});
 
 const app = express();
 

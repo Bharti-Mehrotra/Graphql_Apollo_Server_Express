@@ -1,5 +1,4 @@
-import { gql } from 'apollo-server-express';
-
+const {gql} = require('apollo-server-express');
 export const typeDefs = gql`
     type Friend{
        id:ID
@@ -17,6 +16,15 @@ export const typeDefs = gql`
         year:Int
         rating:Rating
     }
+    type Trip{
+        id:ID
+        place:String
+        amount:Int
+        arrivalDate:String
+        departureDate:String
+        noOfdays:Int
+        noOfFriends:Int
+     }
 
     enum Rating{
         ONE
@@ -46,19 +54,29 @@ export const typeDefs = gql`
         age:Int
         email: String
     }
-
-   
+    input TripInput{
+        id:ID
+        place:String
+        amount:Int
+        arrivalDate:String
+        departureDate:String
+        noOfdays:Int
+        noOfFriends: Int
+    }
 
     type Query{
         getAllFriend:[Friend]
         findASeries(id:ID):Series
+        getAllTrip:[Trip]
     }
 
     type Mutation{
         createFriend(input:FriendInput):Friend
         addASeries(series:SeriesInput):Series
         deleteFriend(id:ID!):Boolean
+        deleteTrip(id:ID!):Boolean
         editSeries(ID:ID!,series:SeriesInput):Boolean
+        editTrip(ID:ID!,trip:TripInput):Boolean
+        createTrip(input:TripInput):Trip
     }
-
 `;
