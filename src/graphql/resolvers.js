@@ -4,25 +4,22 @@ const friendSchema =require('../models/friendSchema');
 const seriesSchema = require('../models/seriesSchema');
 export const resolvers={
     Query:{
-            getAllFriend:(root)=>{
-                return new Promise((resolve,reject)=>{
-                    friendSchema.find((err,friends)=>{
-                        if(err) reject(err);
-                        else resolve(friends);
-                    })
+            async getAllFriend(root){
+                const allFriends = await(friendSchema.find())
+                .then((res)=>{
+                    return res;
                 })
+                console.log(allFriends)
+                return allFriends;
             },
-            findASeries:(root,{id})=>{
-                return new Promise((resolve,reject)=>{
-                    seriesSchema.findOne({_id:id},(err,series)=>{
-                    if(err) reject(err);
-                    else resolve(series);
-                })
-            })
+            async findASeries(root,{id}){
+                const series = await(seriesSchema.findOne({_id:id}))
+            console.log(series)
+            return series;
         }
     },
     Mutation:{
-        createFriend: (root,{ input }) => {
+       async createFriend(root,{ input }){
             const newFriend=new friendSchema({
                 firstName : input.firstName,
                 lastName : input.lastName,
@@ -30,17 +27,11 @@ export const resolvers={
                 language : input.language,
                 age : input.age,
                 email : input.email,
-                // contacts:input.contacts
             });
 
             newFriend.id=newFriend._id;
-
-            return new Promise((resolve,reject)=>{
-                newFriend.save((err)=>{
-                    if(err) reject(err);
-                    else resolve(newFriend);
-                })
-            })
+            const createdFriend = await (newFriend.save());
+            return createdFriend;
         },
         addASeries:(root,{series})=>{
             const newSeries=new seriesSchema({
@@ -57,7 +48,7 @@ export const resolvers={
                     resolve(newSeries);
                 })
             })
-        },
+        }, 
         async deleteFriend(root,{id}){
             const wasDeleted =  await (friendSchema.deleteOne({_id:id}));
             console.log("daasddsdf",wasDeleted)
