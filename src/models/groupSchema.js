@@ -4,7 +4,7 @@ export const groupSchema = new Schema({
     name:{
         type:String
     },
-    friends: {
+    friend: {
         type: Array
     },
 });

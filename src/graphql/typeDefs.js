@@ -15,11 +15,6 @@ export const typeDefs = gql`
         friend:[Friend]
     }
 
-    type Friend{
-        firstName:String
-        lastName:String
-    }
-
     type Series {
         id:ID
         seriesName:String
@@ -69,10 +64,7 @@ export const typeDefs = gql`
         name:String
         friend:[FriendInput]
     }
-    input FriendInput{
-        firstName:String
-        lastName:String
-    }
+    
     input TripInput{
         id:ID
         place:String
@@ -85,15 +77,21 @@ export const typeDefs = gql`
 
     type Query{
         getAllFriend:[Friend]
-        findASeries(id:ID):Series
+        getAllGroup:[Group]
+        findAllSeries:[Series]
+        getSeriesById(id:ID):Series
+        getFriendById(id:ID):Friend
+        getTripById(id:ID):Trip
+        getGroupById(id:ID):Group
         getAllTrip:[Trip]
     }
 
     type Mutation{
         createFriend(input:FriendInput):Friend
-        addASeries(series:SeriesInput):Series
+        addASeries(input:SeriesInput):Series
         createGroup(input:GroupInput):Group
         deleteFriend(id:ID!):Boolean
+        deleteGroup(id:ID!):Boolean
         deleteTrip(id:ID!):Boolean
         editSeries(ID:ID!,series:SeriesInput):Boolean
         editTrip(ID:ID!,trip:TripInput):Boolean
